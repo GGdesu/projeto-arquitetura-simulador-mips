@@ -1,1 +1,1 @@
-# projeto-arquitetura-simulador-mips
+# projeto arquitetura simulador mips
