@@ -14,14 +14,13 @@ public class Simulador {
 		List<OutputJson> saida = new ArrayList<OutputJson>();
 		HexDecoder hexDecoder = new HexDecoder();		
 		
-	    
 		try {
 			InputJson exemplo = test.readJson();
 			hex = exemplo.getText();
 			//pega cada hex de entrada decodifica e adiciona o resultado em uma lista
 			for(String s : hex) {
-				//String instrucao = hexDecoder.decoderInstruction(s);
-				//saida.add(new OutputJson(s, "OK"));
+				String instrucao = hexDecoder.decoderInstruction(s);
+				saida.add(new OutputJson(s, instrucao));
 			}
 			
 			/*for(OutputJson a: saida) {

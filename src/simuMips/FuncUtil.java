@@ -78,9 +78,8 @@ public class FuncUtil {
 
 			// funcao que converte uma string binaria em decimal
 			public String binToDec(String bin) {
-				// converte o binario para o decimal
-				bin = Integer.toString(Integer.parseInt(bin, 2));
-
+				int i = (int) Long.parseLong(bin, 2);
+				bin = ""+ i;
 				return bin;
 			}
 

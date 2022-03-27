@@ -23,7 +23,7 @@ public class JsonHandling {
 
 		// conversão do objeto para json e escrevendo no arquivo
 		String Json = gson.toJson(list);
-		Files.write(Paths.get("outputJson.json"), Json.getBytes());
+		Files.write(Paths.get("output/GRUPOB.exemplo.output.json"), Json.getBytes());
 
 	}
 
@@ -34,7 +34,7 @@ public class JsonHandling {
 
 		
 		// carrego o arquivo Json
-		BufferedReader reader = Files.newBufferedReader(Paths.get("exemplos.input.json"));
+		BufferedReader reader = Files.newBufferedReader(Paths.get("input/exemplos.input.json"));
 		
 
 		// transforma o json em objeto.(desserializa)

@@ -117,14 +117,27 @@ public class HexDecoder {
 				ins = util.imapR.get(000111) + " $" + util.binToDec(util.getRd(bin));
 				ins += ", $" + util.binToDec(util.getRt(bin)) + ", $" + util.binToDec(util.getRs(bin));
 			}	
-			//jr pc, rs 
+			//jr rs 
 			else if(util.getFn(bin).equalsIgnoreCase("001000")) {
-				ins = util.imapR.get(001000) + "$" + util.binToDec(util.getRs(bin));
-			}	
+				ins = util.imapR.get(001000) + " $" + util.binToDec(util.getRs(bin));
+			}
+			//syscall
+			else if(util.getFn(bin).equalsIgnoreCase("001100")) {
+				ins = util.imapR.get(001100);
+			}
 		}
 
 		switch(util.getOpcode(bin)){
-			//identificando instruções do tipo J
+			//identificando instruções do tipo I
+		case "100100": //lbu rt, offset(rs)
+			ins = util.imapIJ.get(100100) + " $" + util.binToDec(util.getRt(bin));
+			ins += ", " + util.binToDec(util.getOperand(bin)) + "($" + util.binToDec(util.getRs(bin)) + ")";
+		break;
+		
+		case "001010": //slti rt, rs, offset
+			ins = util.imapIJ.get(001010) + " $" + util.binToDec(util.getRt(bin));
+			ins += ", $" + util.binToDec(util.getRs(bin)) + ", " + util.binToDec(util.getOperand(bin));
+		break;
 			case "001000": //addi rt, rs, operand
 				ins = util.imapIJ.get(001000) + " $" + util.binToDec(util.getRt(bin));
 				ins += ", $" + util.binToDec(util.getRs(bin)) + ", " + util.binToDec(util.getOperand(bin));	
@@ -189,18 +202,18 @@ public class HexDecoder {
 				ins += ", " + util.binToDec(util.getOperand(bin)) + "($" + util.binToDec(util.getRs(bin)) + ")";			
 			break;
 
-			case "001110": //xori $t, $s, imm
+			case "001110": //xori $t, $s, operand\offset
 				ins = util.imapIJ.get(001110) + " $" + util.binToDec(util.getRt(bin));
 				ins += ", $" + util.binToDec(util.getRs(bin)) + ", " + util.binToDec(util.getOperand(bin));
 			break;
 
 			//identificando instruções do tipo J
-			case "000010": // j		 PC=JumpAddr
-			ins = util.imapIJ.get(000010) + util.binToDec(util.getJTA(bin));	
+			case "000010": // j start
+			ins = util.imapIJ.get(000010) + " start";	
 			break;
 
-			case "000011": // jal	 R[31]=PC+8;PC=JumpAddr
-			ins = util.imapIJ.get(000010) + util.binToDec(util.getJTA(bin));	
+			case "000011": // jal start
+			ins = util.imapIJ.get(000010) + " start";	
 			break;
 		}
 		return ins;		
