@@ -7,7 +7,7 @@ public class FuncUtil {
 	//constructor
 	public FuncUtil() {}
 	
-	//mapeamento do nome das instruções tipo R e syscall
+	//mapeamento do nome das instrucoes tipo R e syscall
 	Map<Integer, String> imapR = Map.ofEntries(
 			Map.entry(100000, "add"),
 			Map.entry(100001, "addu"),
@@ -33,7 +33,7 @@ public class FuncUtil {
 			Map.entry(001100, "syscall"),
 			Map.entry(100110, "xor")
 			);
-	//mapeamento das instruções do tipo I e J
+	//mapeamento das instrucoes do tipo I e J
 	Map<Integer, String> imapIJ = Map.ofEntries(
 			Map.entry(001000, "addi"),
 			Map.entry(001001, "addiu"),
@@ -56,7 +56,7 @@ public class FuncUtil {
 			Map.entry(001110, "xori")
 			);
 	
-			// função que converte o hexadecimal para binario
+			// funcao que converte o hexadecimal para binario
 			public String hexToBin(String hex) {
 				String bin = "";
 				String binFragment = "";
@@ -76,7 +76,7 @@ public class FuncUtil {
 				return bin;
 			}
 
-			// função que converte uma string binaria em decimal
+			// funcao que converte uma string binaria em decimal
 			public String binToDec(String bin) {
 				// converte o binario para o decimal
 				bin = Integer.toString(Integer.parseInt(bin, 2));
@@ -84,7 +84,7 @@ public class FuncUtil {
 				return bin;
 			}
 
-			// função que retorna O Opcode de uma String binaria
+			// funcao que retorna O Opcode de uma String binaria
 			// ex: [000000] 01011011000100000000100000 -> 000000
 			public String getOpcode(String bin) {
 				String opcode = bin.substring(0, 6);
@@ -92,7 +92,7 @@ public class FuncUtil {
 				return opcode;
 			}
 
-			// função que retorna O Rs de uma String binaria
+			// funcao que retorna O Rs de uma String binaria
 			// ex: 000000 [01011] 011000100000000100000 -> 01011
 			public String getRs(String bin) {
 				String rs = bin.substring(6, 11);
@@ -100,7 +100,7 @@ public class FuncUtil {
 				return rs;
 			}
 
-			// função que retorna O Rt de uma String binaria
+			// funcao que retorna O Rt de uma String binaria
 			// ex: 00000001011 [01100] 0100000000100000 -> 01100
 			public String getRt(String bin) {
 				String rt = bin.substring(11, 16);
@@ -108,7 +108,7 @@ public class FuncUtil {
 				return rt;
 			}
 
-			// função que retorna O Rd de uma String binaria
+			// funcao que retorna O Rd de uma String binaria
 			// ex: 0000000101101100 [01000] 00000100000 -> 01000
 			public String getRd(String bin) {
 				String rd = bin.substring(16, 21);
@@ -116,7 +116,7 @@ public class FuncUtil {
 				return rd;
 			}
 
-			// função que retorna O Sh de uma String binaria
+			// funcao que retorna O Sh de uma String binaria
 			// ex: 000000010110110001000 [00000] 100000 -> 00000
 			public String getSh(String bin) {
 				String sh = bin.substring(21, 26);
@@ -124,7 +124,7 @@ public class FuncUtil {
 				return sh;
 			}
 
-			// função que retorna O Fn de uma String binaria
+			// funcao que retorna O Fn de uma String binaria
 			// ex: 00000001011011000100000000 [100000] -> 100000
 			public String getFn(String bin) {
 				String fn = bin.substring(26, 32);
@@ -132,7 +132,7 @@ public class FuncUtil {
 				return fn;
 			}
 			
-			// função que retorna O operand/offset de uma String binaria
+			// funcao que retorna O operand/offset de uma String binaria
 			// ex: 0000000101101100 [0100000000100000] -> 0100000000100000
 			public String getOperand(String bin) {
 				String fn = bin.substring(16, 32);
@@ -140,7 +140,7 @@ public class FuncUtil {
 				return fn;
 			}
 			
-			// função que retorna O operand de uma String binaria
+			// funcao que retorna O operand de uma String binaria
 			// ex: 000000 [01011011000100000000100000] -> 0100000000100000
 			public String getJTA(String bin) {
 				String jta = bin.substring(6, 32);
