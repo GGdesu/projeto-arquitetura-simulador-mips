@@ -1,11 +1,16 @@
 package simuMips;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class FuncUtil {
 	
 	//constructor
-	public FuncUtil() {}
+	public FuncUtil() {
+		
+	}
+	
+	
 	
 	//mapeamento do nome das instrucoes tipo R e syscall
 	Map<Integer, String> imapR = Map.ofEntries(
@@ -55,7 +60,22 @@ public class FuncUtil {
 			Map.entry(101011, "sw"),
 			Map.entry(001110, "xori")
 			);
-	
+			
+			
+			//retorna os registradores diferentes de zero, pare serem escritos no arquivo de saida.
+			public Map<String, Object> getOutputregs(Map<String, Object> registers){
+				Map<String, Object> outMapReg = new LinkedHashMap<>();
+				registers.forEach((chave, valor) ->{
+					//int value = (Integer) valor;
+					if(!valor.equals(Integer.valueOf(0))) {
+						outMapReg.put(chave, valor);
+					}
+				});
+				
+				
+				return outMapReg;
+			}
+			
 			// funcao que converte o hexadecimal para binario
 			public String hexToBin(String hex) {
 				String bin = "";
@@ -75,13 +95,72 @@ public class FuncUtil {
 				}
 				return bin;
 			}
-
-			// funcao que converte uma string binaria em decimal
-			public String binToDec(String bin) {
-				int i = (int) Long.parseLong(bin, 2);
-				bin = ""+ i;
+			
+			//transforma um objeto em um inteiro. caso o objeto não seja um numero ocorrerá um erro.
+			public int objToInt(Map<String, Object> reg ,String key) {
+				int i = (int) (Double.parseDouble(reg.get(key).toString()));
+				
+				return i;
+			}
+			
+			//função que converte binario para decimal
+			public int binToDec(String bin) {
+				boolean ehNegativo = false;
+				if(bin.substring(0, 1).equalsIgnoreCase("1") && bin.length() >= 16) {
+					bin = this.complementoa2(bin);
+					ehNegativo = true;
+				}
+				
+				int numero = Integer.parseInt(bin, 2);
+				if(ehNegativo == true) {
+					numero = numero * (-1);
+				}
+				return numero;
+			}
+			
+			//funçao que converte de decimal para binario
+			public String decToBin(int dec) {
+				String bin = Integer.toBinaryString(dec);
+				
+				if(dec > 0) {
+					for(int i = bin.length(); i < 32; i++) {
+						bin = "0" + bin;
+					}
+				}
+				
 				return bin;
 			}
+			
+			//Funçao que faz o complemento a 2 de numeros negativos
+			public String complementoa2(String t)
+		    {
+		        StringBuffer str = new StringBuffer();
+		        
+		        str.append(t);
+				int n = str.length();
+		        
+		        int i;
+		        for (i = n-1 ; i >= 0 ; i--)
+		            if (str.charAt(i) == '1')
+		                break;
+		      
+		        
+		        if (i == -1)
+		            return "1" + str;
+		      
+		        
+		        for (int k = i-1 ; k >= 0; k--)
+		        {
+		            
+		            if (str.charAt(k) == '1')
+		                str.replace(k, k+1, "0");
+		            else
+		                str.replace(k, k+1, "1");
+		        }
+		      
+		        return str.toString();
+		    }
+
 
 			// funcao que retorna O Opcode de uma String binaria
 			// ex: [000000] 01011011000100000000100000 -> 000000

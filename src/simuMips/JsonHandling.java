@@ -2,12 +2,17 @@ package simuMips;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.LinkedHashMap;
 import java.util.List;
-
+import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 public class JsonHandling {
 	private Gson gson;
@@ -17,7 +22,7 @@ public class JsonHandling {
 	
 	
 
-	public void writeJSON(List list) throws IOException {
+	public void writeJSON(List<?> list) throws IOException {
 		// instanciando um objeto gson para utilizar as funções da biblioteca
 		gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -29,8 +34,8 @@ public class JsonHandling {
 
 	// Metodo vai ler e retornar um objeto do arquivo json. provisoriamente retornar
 	// uma string
-	public InputJson readJson() throws IOException {
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	public JsonObject readJson() throws IOException {
+		 gson = new GsonBuilder().setPrettyPrinting().create();
 
 		
 		// carrego o arquivo Json
@@ -38,7 +43,7 @@ public class JsonHandling {
 		
 
 		// transforma o json em objeto.(desserializa)
-		InputJson saida = gson.fromJson(reader, InputJson.class);
+		JsonObject saida = gson.fromJson(reader, JsonObject.class);
 
 		
 
@@ -46,137 +51,40 @@ public class JsonHandling {
 		return saida;
 
 	}
+	
+	public Map<String, Object> getPreRegs(JsonObject json) {
+		gson = new GsonBuilder().setPrettyPrinting().create();
+		
+		JsonObject regs = json.getAsJsonObject("config").getAsJsonObject("regs");
 
-}
+		Map<String, Object> regsMap = gson.fromJson(regs, new TypeToken<LinkedHashMap<String, Object>>() {
+		}.getType());
 
-//classe do json de saida
-class OutputJson {
-	private String hex;
-	private String text;
+		return regsMap;
 
-	public OutputJson(String hex, String text) {
-		this.hex = hex;
-		this.text = text;
 	}
+	
+	public Map<String, Object> getPreMem(JsonObject json) {
+		gson = new GsonBuilder().setPrettyPrinting().create();
+		
+		JsonObject mem = json.getAsJsonObject("config").getAsJsonObject("mem");
 
-	public String getHex() {
+		Map<String, Object> memMap = gson.fromJson(mem, new TypeToken<LinkedHashMap<String, Object>>() {
+		}.getType());
+
+		return memMap;
+
+	}
+	
+	public List<String> getHexList(JsonObject json){
+		gson = new GsonBuilder().setPrettyPrinting().create();
+		
+		JsonElement text = json.get("text");
+		Type listType = new TypeToken<List<String>>() {}.getType();
+		
+		List<String> hex = gson.fromJson(text, listType);
+		
 		return hex;
+		
 	}
-
-	public void setHex(String hex) {
-		this.hex = hex;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	@Override
-	public String toString() {
-		return "OutputJson [hex= " + hex + ", text= " + text + "]";
-	}
-	
-	
-
 }
-
-//classes do json de entrada
-//-----------------------------------------------------//
-class InputJson {
-	private Config config;
-	private Data data;
-	private List<String> text;
-
-	// constructor
-	public InputJson() {
-	}
-
-	//getters and setters
-	public Config getConfig() {
-		return config;
-	}
-
-
-	public void setConfig(Config config) {
-		this.config = config;
-	}
-
-
-	public Data getData() {
-		return data;
-	}
-
-
-	public void setData(Data data) {
-		this.data = data;
-	}
-
-
-	public List<String> getText() {
-		return text;
-	}
-
-
-	public void setText(List<String> text) {
-		this.text = text;
-	}
-
-
-	// tostring
-	@Override
-	public String toString() {
-		return "InputJson [config=" + config + ", data=" + data + ", text=" + text + "]";
-	}
-
-}
-
-class Data {
-
-	// tostring
-	@Override
-	public String toString() {
-		return "Data []";
-	}
-
-}
-
-class Config {
-	private Reg regs;
-	private Mem mem;
-
-	// constructor
-	public Config() {
-	}
-
-	// tostring
-	@Override
-	public String toString() {
-		return "Config [regs=" + regs + ", mem=" + mem + "]";
-	}
-
-}
-
-class Reg {
-
-	// tostring
-	@Override
-	public String toString() {
-		return "Reg []";
-	}
-
-}
-
-class Mem {
-
-	// tostring
-	@Override
-	public String toString() {
-		return "Mem []";
-	}
-
-}
-//-----------------------------------------------------//
