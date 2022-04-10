@@ -96,6 +96,34 @@ public class FuncUtil {
 				return bin;
 			}
 			
+			//função para checar se há overflow na instrução
+			public boolean checkOverflow(String op,int value1, int value2) {
+				
+				final long negativeLim = Integer.MIN_VALUE;
+				final long positiveLim = Integer.MAX_VALUE;
+				long l1 = value1;
+				long l2 = value2;
+				
+				
+				switch (op) {
+				case "+":
+					if((l1+l2) > positiveLim || (l1+l2) < negativeLim) {
+						return true;
+					}
+					break;
+				case "-":
+					if((l1-l2) > positiveLim || (l1-l2) < negativeLim) {
+						return true;
+					}
+					
+					break;
+				default:
+					break;
+				}
+							
+				return false;
+			}
+			
 			//transforma um objeto em um inteiro. caso o objeto não seja um numero ocorrerá um erro.
 			public int objToInt(Map<String, Object> reg ,String key) {
 				int i = (int) (Double.parseDouble(reg.get(key).toString()));
@@ -122,7 +150,7 @@ public class FuncUtil {
 			public String decToBin(int dec) {
 				String bin = Integer.toBinaryString(dec);
 				
-				if(dec > 0) {
+				if(dec >= 0) {
 					for(int i = bin.length(); i < 32; i++) {
 						bin = "0" + bin;
 					}

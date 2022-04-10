@@ -4,6 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class HexDecoder {
+	private String stdout = "";
+	
+
 	FuncUtil util = new FuncUtil();
 	LinkedHashMap<String, Object> registers = new LinkedHashMap<>();
 	
@@ -49,6 +52,10 @@ public class HexDecoder {
 		registers.put("lo", 0);
 	}
 	
+	public Map<String, Object> getRegs(){
+		return registers;
+	}
+	
 	//inicializa os registradores com valores que vem pre-configurado no arquivo de entrada.
 	public void initializeReg(Map<String, Object> regInit) {
 		
@@ -66,8 +73,9 @@ public class HexDecoder {
 		int result, shamt, offset;
 		String rd = "";
 		String rs = "";
-		String rt = "";
+		String rt;
 		String aux = "";
+		this.setStdout("");
 
 		
 		
@@ -86,8 +94,13 @@ public class HexDecoder {
 				rt = "$" + util.binToDec(util.getRt(bin));
 				
 				//executando a instrução
-				result = util.objToInt(registers, rs) + util.objToInt(registers, rt);
-				registers.put(rd, result);
+				if((util.checkOverflow("+", util.objToInt(registers, rs), util.objToInt(registers, rt)))){
+					this.setStdout("Overflow");
+				}else {
+					result = util.objToInt(registers, rs) + util.objToInt(registers, rt);
+					registers.put(rd, result);
+				}
+				
 				//-------------------------------------------------------------------------------------------------------------//
 				break;
 			case "100010": //sub rd, rs, rt
@@ -100,8 +113,14 @@ public class HexDecoder {
 				rt = "$" + util.binToDec(util.getRt(bin));
 				
 				//executando a instrução
-				result = util.objToInt(registers, rs) - util.objToInt(registers, rt);
-				registers.put(rd, result);
+				if((util.checkOverflow("-", util.objToInt(registers, rs), util.objToInt(registers, rt)))){
+					this.setStdout("Overflow");
+				}else {
+					result = util.objToInt(registers, rs) - util.objToInt(registers, rt);
+					registers.put(rd, result);
+				}
+				
+				
 				//-------------------------------------------------------------------------------------------------------------//
 				break;
 			case "101010": //slt rd, rs, rt
@@ -460,9 +479,15 @@ public class HexDecoder {
 			offset = util.binToDec(util.getOperand(bin));
 			
 			//executando a instrução
-			result = util.objToInt(registers, rs) + offset;
+			if((util.checkOverflow("+", util.objToInt(registers, rs), offset))){
+				this.setStdout("Overflow");
+			}else {
+				result = util.objToInt(registers, rs) + offset;
+				registers.put(rt, result);
+			}
 			
-			registers.put(rt, result);
+			
+			
 			//-------------------------------------------------------------------------------------------------------------//
 			break;
 
@@ -554,8 +579,9 @@ public class HexDecoder {
 			// usarei a variavel "rd" para guardar o offset
 			rd = util.decToBin(util.binToDec(util.getOperand(bin)));
 			aux = "";
+			
 			for(int i = rs.length()-1; i >= 0; i--) {
-				if((rd.charAt(i) == '1' || rd.charAt(i) == '1')) {
+				if((rd.charAt(i) == '1' || rs.charAt(i) == '1')) {
 					aux = "1" + aux;
 				}else {
 					aux = "0" + aux;
@@ -580,7 +606,7 @@ public class HexDecoder {
 			ins += ", $" + util.binToDec(util.getRs(bin)) + ", " + util.binToDec(util.getOperand(bin));
 			//-------------------------------------------------------------------------------------------------------------//
 			//pegando os valores da instrução
-			rd = "$" + util.binToDec(util.getRd(bin));
+			rt = "$" + util.binToDec(util.getRt(bin));
 			rs = "$" +  util.binToDec(util.getRs(bin));
 			
 			//executando a instrução
@@ -608,7 +634,20 @@ public class HexDecoder {
 			ins = util.imapIJ.get(000010) + " start";
 			break;
 		}
+		
+		//PC = PC+4
+		int pc = util.objToInt(registers, "pc");
+		registers.put("pc", pc+4);
+		//-------------------------------------//
 		return ins;		
+	}
+	
+	public String getStdout() {
+		return stdout;
+	}
+
+	public void setStdout(String stdout) {
+		this.stdout = stdout;
 	}
 	
 }

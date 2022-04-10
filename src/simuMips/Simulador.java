@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 public class Simulador {
@@ -33,24 +31,11 @@ public class Simulador {
 			//Object o = gson.fromJson(reader, Object.class);
 			
 			
-			//System.out.println(util.registers.get("pc"));
-			//util.regs.replace("$1", 5);
-			//System.out.println(util.registers.get("$28"));
-			
-			
 			/*map.forEach((k,v)->{
 				System.out.println("k: " + k + " v: " + v);
-			});
+			});*/
 			//System.out.println(map.keySet());
-			*/
 			
-			
-			
-			
-			
-			
-			//Lembar de criar uma função para valores unsigned 0 a 2^32-1.
-			//valores signed são de -2^31-1 a 2^31-1
 			
 			
 			hex = test.getHexList(input);
@@ -62,9 +47,15 @@ public class Simulador {
 				output.put("text", instrucao);
 				output.put("regs", util.getOutputregs(hexDecoder.registers));
 				output.put("mem", memMap);
-				output.put("stdout", "");
+				output.put("stdout", hexDecoder.getStdout());
 				saida.add(output);
+				/*Map<String, Object> tMap = hexDecoder.getRegs();
+				tMap.forEach((k,v)->{
+					System.out.println("k: " + k + " v: " + v);
+				});
+				System.out.println();*/
 			}
+			
 			
 			//por fim pega a lista e escreve em um arquivo.
 			test.writeJSON(saida);
