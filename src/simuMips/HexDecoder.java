@@ -15,6 +15,16 @@ public class HexDecoder {
 	//constructor
 	//quando uma instancia da classe for criada o banco de registradores é iniciado
 	public HexDecoder() {
+		
+	}
+	
+	public Map<String, Object> getRegs(){
+		return registers;
+	}
+	
+	//inicializa os registradores com valores que vem pre-configurado no arquivo de entrada.
+	public void initializeReg(Map<String, Object> regInit) {
+		
 		registers.put("$0", 0);
 		registers.put("$1", 0);
 		registers.put("$2", 0);
@@ -50,14 +60,6 @@ public class HexDecoder {
 		registers.put("pc", 4194304);
 		registers.put("hi", 0);
 		registers.put("lo", 0);
-	}
-	
-	public Map<String, Object> getRegs(){
-		return registers;
-	}
-	
-	//inicializa os registradores com valores que vem pre-configurado no arquivo de entrada.
-	public void initializeReg(Map<String, Object> regInit) {
 		
 		if (!regInit.isEmpty()) {
 			regInit.forEach((chave, valor) -> {

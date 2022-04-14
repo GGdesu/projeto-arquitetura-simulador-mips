@@ -1,6 +1,8 @@
 package simuMips;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
@@ -22,24 +24,28 @@ public class JsonHandling {
 	
 	
 
-	public void writeJSON(List<?> list) throws IOException {
+	public void writeJSON(List<?> list, String filename) throws IOException {
 		// instanciando um objeto gson para utilizar as funções da biblioteca
 		gson = new GsonBuilder().setPrettyPrinting().create();
 
+		int indexDot = filename.indexOf('.');
+		String name = filename.substring(0, indexDot);
+		
+		
 		// conversão do objeto para json e escrevendo no arquivo
 		String Json = gson.toJson(list);
-		Files.write(Paths.get("output/GRUPOB.exemplo.output.json"), Json.getBytes());
+		Files.write(Paths.get("output/GRUPOB." + name + ".output.json"), Json.getBytes());
 
 	}
 
 	// Metodo vai ler e retornar um objeto do arquivo json. provisoriamente retornar
 	// uma string
-	public JsonObject readJson() throws IOException {
+	public JsonObject readJson(String filename) throws IOException {
 		 gson = new GsonBuilder().setPrettyPrinting().create();
 
 		
 		// carrego o arquivo Json
-		BufferedReader reader = Files.newBufferedReader(Paths.get("input/exemplos.input.json"));
+		BufferedReader reader = Files.newBufferedReader(Paths.get("input/" + filename));
 		
 
 		// transforma o json em objeto.(desserializa)
@@ -50,6 +56,23 @@ public class JsonHandling {
 		// System.out.println(json);
 		return saida;
 
+	}
+	
+	public File[] getListFiles() {
+		File f = new File("input");
+		
+		FilenameFilter filter = new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				
+				return name.endsWith(".input.json");
+			}
+		};
+		
+		File[] files = f.listFiles(filter);
+		
+		return files;
 	}
 	
 	public Map<String, Object> getPreRegs(JsonObject json) {
