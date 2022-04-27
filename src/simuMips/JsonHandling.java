@@ -57,7 +57,7 @@ public class JsonHandling {
 		return saida;
 
 	}
-	
+	//pega a lista de arquivos json no repositório input
 	public File[] getListFiles() {
 		File f = new File("input");
 		
@@ -75,6 +75,7 @@ public class JsonHandling {
 		return files;
 	}
 	
+	//pega os registradores do arquivo de entrada
 	public Map<String, Object> getPreRegs(JsonObject json) {
 		gson = new GsonBuilder().setPrettyPrinting().create();
 		
@@ -87,6 +88,7 @@ public class JsonHandling {
 
 	}
 	
+	//pega as informações de memoria do arquivo de entrada
 	public Map<String, Object> getPreMem(JsonObject json) {
 		gson = new GsonBuilder().setPrettyPrinting().create();
 		
@@ -97,6 +99,18 @@ public class JsonHandling {
 
 		return memMap;
 
+	}
+	
+	public Map<String, Object> getPreData(JsonObject json){
+		gson = new GsonBuilder().setPrettyPrinting().create();
+		
+		JsonObject data = json.getAsJsonObject("data");
+		
+		Map<String, Object> dataMap = gson.fromJson(data, new TypeToken<LinkedHashMap<String, Object>>(){
+		}.getType());
+		
+		return dataMap;
+		
 	}
 	
 	public List<String> getHexList(JsonObject json){

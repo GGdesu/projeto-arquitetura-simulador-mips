@@ -2,6 +2,7 @@ package simuMips;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class HexDecoder {
 	private String stdout = "";
@@ -9,6 +10,8 @@ public class HexDecoder {
 
 	FuncUtil util = new FuncUtil();
 	LinkedHashMap<String, Object> registers = new LinkedHashMap<>();
+	LinkedHashMap<String, Object> data = new LinkedHashMap<>();
+	TreeMap<String, Object> memory = new TreeMap<>();
 	
 	
 	
@@ -20,6 +23,24 @@ public class HexDecoder {
 	
 	public Map<String, Object> getRegs(){
 		return registers;
+	}
+	
+	public void initializeData(Map<String, Object> dataInit) {
+		if(!(dataInit == null)) {
+			data.putAll(dataInit);
+		}else {
+			System.out.println("Arquivo de entrada não tem informação de Data");
+		}
+	}
+	
+	//Inicializa a memoria com valores que estão no arquivo de entrada
+	public void initializeMem(Map<String, Object> memInit) {
+		
+		if(!(memInit == null)) {
+			memory.putAll(memInit);
+		}else {
+			System.out.println("Arquivo de entrada não tem informação de memória");
+		}
 	}
 	
 	//inicializa os registradores com valores que vem pre-configurado no arquivo de entrada.

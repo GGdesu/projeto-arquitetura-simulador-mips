@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+
 import com.google.gson.JsonObject;
 
 public class Simulador {
@@ -17,8 +19,8 @@ public class Simulador {
 		List<String> hex;
 		HexDecoder hexDecoder = new HexDecoder();		
 		Map<String,Object> regsMap = new LinkedHashMap<String,Object>();
-		//pegará as preconfig de memoria, por enquanto uso ela pra escrever algo na saida
 		Map<String,Object> memMap = new LinkedHashMap<String,Object>();
+		Map<String, Object> dataMap = new LinkedHashMap<String, Object>();
 		
 		try {
 			//pegando o nome dos arquivos da pasta input
@@ -31,8 +33,12 @@ public class Simulador {
 				List<Map<String, Object>> saida = new ArrayList<>();
 				JsonObject input = test.readJson(listaArq[i].getName());
 				regsMap = test.getPreRegs(input);
+				memMap = test.getPreMem(input);
+				dataMap = test.getPreData(input);
+				//Inicializando os bancos de registradores e memoria, "data"
 				hexDecoder.initializeReg(regsMap);
-				
+				hexDecoder.initializeMem(memMap);	
+				hexDecoder.initializeData(dataMap);
 
 
 				hex = test.getHexList(input);
@@ -43,7 +49,7 @@ public class Simulador {
 					output.put("hex", s);
 					output.put("text", instrucao);
 					output.put("regs", util.getOutputregs(hexDecoder.registers));
-					output.put("mem", memMap);
+					output.put("mem", hexDecoder.memory);
 					output.put("stdout", hexDecoder.getStdout());
 					saida.add(output);
 
