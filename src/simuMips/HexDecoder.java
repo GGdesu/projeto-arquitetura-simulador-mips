@@ -13,7 +13,7 @@ public class HexDecoder {
 	
 	
 	//constructor
-	//quando uma instancia da classe for criada o banco de registradores é iniciado
+	//quando uma instancia da classe for criada o banco de registradores ï¿½ iniciado
 	public HexDecoder() {
 		
 	}
@@ -90,12 +90,12 @@ public class HexDecoder {
 				ins = util.imapR.get(100000) + " $" + util.binToDec(util.getRd(bin));
 				ins += ", $" + util.binToDec(util.getRs(bin)) + ", $" + util.binToDec(util.getRt(bin));
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" + util.binToDec(util.getRd(bin));
 				rs = "$" +  util.binToDec(util.getRs(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				if((util.checkOverflow("+", util.objToInt(registers, rs), util.objToInt(registers, rt)))){
 					this.setStdout("Overflow");
 				}else {
@@ -109,12 +109,12 @@ public class HexDecoder {
 				ins = util.imapR.get(100010) + " $" + util.binToDec(util.getRd(bin));
 				ins += ", $" + util.binToDec(util.getRs(bin)) + ", $" + util.binToDec(util.getRt(bin));	
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" + util.binToDec(util.getRd(bin));
 				rs = "$" +  util.binToDec(util.getRs(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				if((util.checkOverflow("-", util.objToInt(registers, rs), util.objToInt(registers, rt)))){
 					this.setStdout("Overflow");
 				}else {
@@ -126,15 +126,15 @@ public class HexDecoder {
 				//-------------------------------------------------------------------------------------------------------------//
 				break;
 			case "101010": //slt rd, rs, rt
-				ins = util.imapR.get(100010) + " $" + util.binToDec(util.getRd(bin));
+				ins = util.imapR.get(101010) + " $" + util.binToDec(util.getRd(bin));
 				ins += ", $" + util.binToDec(util.getRs(bin)) + ", $" + util.binToDec(util.getRt(bin));
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" + util.binToDec(util.getRd(bin));
 				rs = "$" +  util.binToDec(util.getRs(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				if(util.objToInt(registers, rs) < util.objToInt(registers, rt)) {
 					registers.put(rd, 1);
 				}else {
@@ -146,12 +146,12 @@ public class HexDecoder {
 				ins = util.imapR.get(100100) + " $" + util.binToDec(util.getRd(bin));
 				ins += ", $" + util.binToDec(util.getRs(bin)) + ", $" + util.binToDec(util.getRt(bin));	
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" + util.binToDec(util.getRd(bin));
 				rs = "$" +  util.binToDec(util.getRs(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				rs = util.decToBin(util.objToInt(registers, rs));
 				rt = util.decToBin(util.objToInt(registers, rt));
 				aux = "";
@@ -169,12 +169,12 @@ public class HexDecoder {
 				ins = util.imapR.get(100101) + " $" + util.binToDec(util.getRd(bin));
 				ins += ", $" + util.binToDec(util.getRs(bin)) + ", $" + util.binToDec(util.getRt(bin));
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" + util.binToDec(util.getRd(bin));
 				rs = "$" +  util.binToDec(util.getRs(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				rs = util.decToBin(util.objToInt(registers, rs));
 				rt = util.decToBin(util.objToInt(registers, rt));
 				aux = "";
@@ -192,12 +192,12 @@ public class HexDecoder {
 				ins = util.imapR.get(100110) + " $" + util.binToDec(util.getRd(bin));
 				ins += ", $" + util.binToDec(util.getRs(bin)) + ", $" + util.binToDec(util.getRt(bin));
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" + util.binToDec(util.getRd(bin));
 				rs = "$" +  util.binToDec(util.getRs(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				rs = util.decToBin(util.objToInt(registers, rs));
 				rt = util.decToBin(util.objToInt(registers, rt));
 				aux = "";
@@ -215,12 +215,12 @@ public class HexDecoder {
 				ins = util.imapR.get(100111) + " $" + util.binToDec(util.getRd(bin));
 				ins += ", $" + util.binToDec(util.getRs(bin)) + ", $" + util.binToDec(util.getRt(bin));	
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" + util.binToDec(util.getRd(bin));
 				rs = "$" +  util.binToDec(util.getRs(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				rs = util.decToBin(util.objToInt(registers, rs));
 				rt = util.decToBin(util.objToInt(registers, rt));
 				aux = "";
@@ -237,10 +237,10 @@ public class HexDecoder {
 			case "010000": //mfhi rd
 				ins = util.imapR.get(010000) + " $" + util.binToDec(util.getRd(bin));
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" + util.binToDec(util.getRd(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				
 				registers.put(rd, util.objToInt(registers, "hi"));
 				//-------------------------------------------------------------------------------------------------------------//
@@ -248,10 +248,10 @@ public class HexDecoder {
 			case "010010": //mflo rd
 				ins = util.imapR.get(010010) + " $" + util.binToDec(util.getRd(bin));
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" + util.binToDec(util.getRd(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				
 				registers.put(rd, util.objToInt(registers, "lo"));
 				//-------------------------------------------------------------------------------------------------------------//
@@ -260,12 +260,12 @@ public class HexDecoder {
 				ins = util.imapR.get(100001) + " $" + util.binToDec(util.getRd(bin));
 				ins += ", $" + util.binToDec(util.getRs(bin)) + ", $" + util.binToDec(util.getRt(bin));	
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" + util.binToDec(util.getRd(bin));
 				rs = "$" +  util.binToDec(util.getRs(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				result = util.objToInt(registers, rs) + util.objToInt(registers, rt);
 				registers.put(rd, result);
 				//-------------------------------------------------------------------------------------------------------------//				
@@ -274,12 +274,12 @@ public class HexDecoder {
 				ins = util.imapR.get(100011) + " $" + util.binToDec(util.getRd(bin));
 				ins += ", $" + util.binToDec(util.getRs(bin)) + ", $" + util.binToDec(util.getRt(bin));	
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" + util.binToDec(util.getRd(bin));
 				rs = "$" +  util.binToDec(util.getRs(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				result = util.objToInt(registers, rs) - util.objToInt(registers, rt);
 				registers.put(rd, result);
 				//-------------------------------------------------------------------------------------------------------------//
@@ -288,11 +288,11 @@ public class HexDecoder {
 				ins = util.imapR.get(011000) + " $" + util.binToDec(util.getRs(bin));
 				ins += ", $" + util.binToDec(util.getRt(bin));
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rs = "$" +  util.binToDec(util.getRs(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				result = util.objToInt(registers, rs) * util.objToInt(registers, rt);
 				registers.put("lo", result);
 				//-------------------------------------------------------------------------------------------------------------//
@@ -301,11 +301,11 @@ public class HexDecoder {
 				ins = util.imapR.get(011001) + " $" + util.binToDec(util.getRs(bin));
 				ins += ", $" + util.binToDec(util.getRt(bin));
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rs = "$" +  util.binToDec(util.getRs(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				result = util.objToInt(registers, rs) * util.objToInt(registers, rt);
 				registers.put("lo", result);
 				//-------------------------------------------------------------------------------------------------------------//
@@ -314,11 +314,11 @@ public class HexDecoder {
 				ins = util.imapR.get(011010) + " $" + util.binToDec(util.getRs(bin));
 				ins += ", $" + util.binToDec(util.getRt(bin));
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rs = "$" +  util.binToDec(util.getRs(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				if(util.objToInt(registers, rs) != 0 && util.objToInt(registers, rt) != 0) {
 				registers.put("lo", (util.objToInt(registers, rs) / util.objToInt(registers, rt)));
 				registers.put("hi", (util.objToInt(registers, rs) % util.objToInt(registers, rt)));
@@ -332,11 +332,11 @@ public class HexDecoder {
 				ins = util.imapR.get(011011) + " $" + util.binToDec(util.getRs(bin));
 				ins += ", $" + util.binToDec(util.getRt(bin));
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rs = "$" +  util.binToDec(util.getRs(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				if(util.objToInt(registers, rs) != 0 && util.objToInt(registers, rt) != 0) {
 					registers.put("lo", (util.objToInt(registers, rs) / util.objToInt(registers, rt)));
 					registers.put("hi", (util.objToInt(registers, rs) % util.objToInt(registers, rt)));
@@ -346,46 +346,46 @@ public class HexDecoder {
 					}
 				//-------------------------------------------------------------------------------------------------------------//
 				break;
-			case "000000": //sll rd, rt, shamt
+			case "000000": //sll rd, rt, shamt //CONSERTAR SHAMT
 				ins = util.imapR.get(000000) + " $" + util.binToDec(util.getRd(bin));
 				ins += ", $" + util.binToDec(util.getRt(bin)) + ", " + util.binToDec(util.getOperand(bin));	
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" +  util.binToDec(util.getRd(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				shamt = util.binToDec(util.getSh(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				result = util.objToInt(registers, rt) * (int) Math.pow(2, shamt);
 				
 				registers.put(rd, result);
 				//-------------------------------------------------------------------------------------------------------------//
 				break;
-			case "000010": //srl rd, rt, shamt 
+			case "000010": //srl rd, rt, shamt //CONSERTAR SHAMT
 				ins = util.imapR.get(000010) + " $" + util.binToDec(util.getRd(bin));
 				ins += ", $" + util.binToDec(util.getRt(bin)) + ", " + util.binToDec(util.getOperand(bin));
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" +  util.binToDec(util.getRd(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				shamt = util.binToDec(util.getSh(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				result = util.objToInt(registers, rt) * (int) Math.pow(2, -shamt);
 				
 				registers.put(rd, result);
 				//-------------------------------------------------------------------------------------------------------------//
 				break;
-			case "000011": //sra rd, rt, shamt 
+			case "000011": //sra rd, rt, shamt //CONSERTAR SHAMT
 				ins = util.imapR.get(000011) + " $" + util.binToDec(util.getRd(bin));
 				ins += ", $" + util.binToDec(util.getRt(bin)) + ", " + util.binToDec(util.getOperand(bin));
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" +  util.binToDec(util.getRd(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				shamt = util.binToDec(util.getSh(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				result = util.objToInt(registers, rt) >> shamt;
 				
 				registers.put(rd, result);
@@ -395,12 +395,12 @@ public class HexDecoder {
 				ins = util.imapR.get(000100) + " $" + util.binToDec(util.getRd(bin));
 				ins += ", $" + util.binToDec(util.getRt(bin)) + ", $" + util.binToDec(util.getRs(bin));
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" +  util.binToDec(util.getRd(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				rs = "$" +  util.binToDec(util.getRs(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				result = util.objToInt(registers, rt) << util.objToInt(registers, rs);
 				
 				registers.put(rd, result);
@@ -410,12 +410,12 @@ public class HexDecoder {
 				ins = util.imapR.get(000110) + " $" + util.binToDec(util.getRd(bin));
 				ins += ", $" + util.binToDec(util.getRt(bin)) + ", $" + util.binToDec(util.getRs(bin));
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" +  util.binToDec(util.getRd(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				rs = "$" +  util.binToDec(util.getRs(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				result = util.objToInt(registers, rt) >>> util.objToInt(registers, rs);
 				
 				registers.put(rd, result);
@@ -425,12 +425,12 @@ public class HexDecoder {
 				ins = util.imapR.get(000111) + " $" + util.binToDec(util.getRd(bin));
 				ins += ", $" + util.binToDec(util.getRt(bin)) + ", $" + util.binToDec(util.getRs(bin));
 				//-------------------------------------------------------------------------------------------------------------//
-				//pegando os valores da instrução
+				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" +  util.binToDec(util.getRd(bin));
 				rt = "$" + util.binToDec(util.getRt(bin));
 				rs = "$" +  util.binToDec(util.getRs(bin));
 				
-				//executando a instrução
+				//executando a instruï¿½ï¿½o
 				result = util.objToInt(registers, rt) >> util.objToInt(registers, rs);
 				
 				registers.put(rd, result);
@@ -458,12 +458,12 @@ public class HexDecoder {
 			ins = util.imapIJ.get(001010) + " $" + util.binToDec(util.getRt(bin));
 			ins += ", $" + util.binToDec(util.getRs(bin)) + ", " + util.binToDec(util.getOperand(bin));
 			//-------------------------------------------------------------------------------------------------------------//
-			//pegando os valores da instrução
+			//pegando os valores da instruï¿½ï¿½o
 			
 			rs = "$" +  util.binToDec(util.getRs(bin));
 			rt = "$" + util.binToDec(util.getRt(bin));
 			
-			//executando a instrução
+			//executando a instruï¿½ï¿½o
 			if(util.objToInt(registers, rs) < util.binToDec(util.getOperand(bin))) {
 				registers.put(rt, 1);
 			}else {
@@ -475,12 +475,12 @@ public class HexDecoder {
 			ins = util.imapIJ.get(001000) + " $" + util.binToDec(util.getRt(bin));
 			ins += ", $" + util.binToDec(util.getRs(bin)) + ", " + util.binToDec(util.getOperand(bin));
 			//-------------------------------------------------------------------------------------------------------------//
-			//pegando os valores da instrução
+			//pegando os valores da instruï¿½ï¿½o
 			rt = "$" + util.binToDec(util.getRt(bin));
 			rs = "$" +  util.binToDec(util.getRs(bin));
 			offset = util.binToDec(util.getOperand(bin));
 			
-			//executando a instrução
+			//executando a instruï¿½ï¿½o
 			if((util.checkOverflow("+", util.objToInt(registers, rs), offset))){
 				this.setStdout("Overflow");
 			}else {
@@ -497,12 +497,12 @@ public class HexDecoder {
 			ins = util.imapIJ.get(001001) + " $" + util.binToDec(util.getRt(bin));
 			ins += ", $" + util.binToDec(util.getRs(bin)) + ", " + util.binToDec(util.getOperand(bin));
 			//-------------------------------------------------------------------------------------------------------------//
-			//pegando os valores da instrução
+			//pegando os valores da instruï¿½ï¿½o
 			rt = "$" + util.binToDec(util.getRt(bin));
 			rs = "$" +  util.binToDec(util.getRs(bin));
 			offset = util.binToDec(util.getOperand(bin));
 			
-			//executando a instrução
+			//executando a instruï¿½ï¿½o
 			result = util.objToInt(registers, rs) + offset;
 			
 			registers.put(rt, result);
@@ -513,11 +513,11 @@ public class HexDecoder {
 			ins = util.imapIJ.get(001100) + " $" + util.binToDec(util.getRt(bin));
 			ins += ", $" + util.binToDec(util.getRs(bin)) + ", " + util.binToDec(util.getOperand(bin));
 			//-------------------------------------------------------------------------------------------------------------//
-			//pegando os valores da instrução
+			//pegando os valores da instruï¿½ï¿½o
 			rs = "$" +  util.binToDec(util.getRs(bin));
 			rt = "$" + util.binToDec(util.getRt(bin));
 			
-			//executando a instrução
+			//executando a instruï¿½ï¿½o
 			rs = util.decToBin(util.objToInt(registers, rs));
 			// usarei a variavel "rd" para guardar o offset
 			rd = util.decToBin(util.binToDec(util.getOperand(bin)));
@@ -543,8 +543,8 @@ public class HexDecoder {
 			ins = util.imapIJ.get(000001) + " $" + util.binToDec(util.getRs(bin)) + ", start";
 			break;
 
-		case "000101": // bne rs, rt, start
-			ins = util.imapIJ.get(000101) + " $" + util.binToDec(util.getRt(bin));
+		case "000101": // bne rs, rt, start // CONSERTAR START PELA INSTRUÃ‡ÃƒO
+			ins = util.imapIJ.get(000101) + " $" + util.binToDec(util.getRs(bin));
 			ins += ", $" + util.binToDec(util.getRt(bin)) + ", start";
 			break;
 
@@ -572,11 +572,11 @@ public class HexDecoder {
 			ins = util.imapIJ.get(001101) + " $" + util.binToDec(util.getRt(bin));
 			ins += ", $" + util.binToDec(util.getRs(bin)) + ", " + util.binToDec(util.getOperand(bin));
 			//-------------------------------------------------------------------------------------------------------------//
-			//pegando os valores da instrução
+			//pegando os valores da instruï¿½ï¿½o
 			rs = "$" +  util.binToDec(util.getRs(bin));
 			rt = "$" + util.binToDec(util.getRt(bin));
 			
-			//executando a instrução
+			//executando a instruï¿½ï¿½o
 			rs = util.decToBin(util.objToInt(registers, rs));
 			// usarei a variavel "rd" para guardar o offset
 			rd = util.decToBin(util.binToDec(util.getOperand(bin)));
@@ -593,9 +593,9 @@ public class HexDecoder {
 			//-------------------------------------------------------------------------------------------------------------//
 			break;
 
-		case "101000": // sb rs, offset(rt)
-			ins = util.imapIJ.get(101000) + " $" + util.binToDec(util.getRs(bin));
-			ins += ", " + util.binToDec(util.getOperand(bin)) + "($" + util.binToDec(util.getRt(bin)) + ")";
+		case "101000": // sb rt, offset(rs)
+			ins = util.imapIJ.get(101000) + " $" + util.binToDec(util.getRt(bin));
+			ins += ", " + util.binToDec(util.getOperand(bin)) + "($" + util.binToDec(util.getRs(bin)) + ")";
 			break;
 
 		case "101011": // sw rt, offset(rs)
@@ -607,11 +607,11 @@ public class HexDecoder {
 			ins = util.imapIJ.get(001110) + " $" + util.binToDec(util.getRt(bin));
 			ins += ", $" + util.binToDec(util.getRs(bin)) + ", " + util.binToDec(util.getOperand(bin));
 			//-------------------------------------------------------------------------------------------------------------//
-			//pegando os valores da instrução
+			//pegando os valores da instruï¿½ï¿½o
 			rt = "$" + util.binToDec(util.getRt(bin));
 			rs = "$" +  util.binToDec(util.getRs(bin));
 			
-			//executando a instrução
+			//executando a instruï¿½ï¿½o
 			rs = util.decToBin(util.objToInt(registers, rs));
 			// usarei a variavel "rd" para guardar o offset
 			rd = util.decToBin(util.binToDec(util.getOperand(bin)));
