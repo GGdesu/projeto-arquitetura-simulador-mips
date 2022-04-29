@@ -93,7 +93,8 @@ public class HexDecoder {
 	public String decoderInstruction(String hex) {
 		String bin = util.hexToBin(hex);
 		String ins = "";
-		int result, shamt, offset;
+		int result, shamt, offset, address;
+		Integer mem;
 		String rd = "";
 		String rs = "";
 		String rt;
@@ -572,21 +573,82 @@ public class HexDecoder {
 		case "100000": // lb rt, offset(rs)
 			ins = util.imapIJ.get(100000) + " $" + util.binToDec(util.getRt(bin));
 			ins += ", " + util.binToDec(util.getOperand(bin)) + "($" + util.binToDec(util.getRs(bin)) + ")";
+			//-------------------------------------------------------------------------------------------------------------//
+			rs = "$" + util.binToDec(util.getRs(bin));
+			rt = "$" + util.binToDec(util.getRt(bin));
+			offset = util.binToDec(util.getOperand(bin));
+			
+			//pegando o endereço de memória
+			address = offset + util.objToInt(registers, rs);
+			
+			//pegando o dado que está no endereço de memória
+			mem = (Integer) memory.get(Integer.toString(address));
+			
+			if((mem != null)) {
+				registers.put(rt, util.binToDec(util.getByteSignExt(mem)));
+			}
+			
+			//-------------------------------------------------------------------------------------------------------------//
 			break;
 
 		case "100110": // lbu rt, offset(rs)
 			ins = util.imapIJ.get(100110) + " $" + util.binToDec(util.getRt(bin));
 			ins += ", " + util.binToDec(util.getOperand(bin)) + "($" + util.binToDec(util.getRs(bin)) + ")";
+			//-------------------------------------------------------------------------------------------------------------//
+			rs = "$" + util.binToDec(util.getRs(bin));
+			rt = "$" + util.binToDec(util.getRt(bin));
+			offset = util.binToDec(util.getOperand(bin));
+			
+			//pegando o endereço de memória
+			address = offset + util.objToInt(registers, rs);
+			
+			//pegando o dado que está no endereço de memória
+			mem = (Integer) memory.get(Integer.toString(address));
+			
+			if((mem != null)) {
+				//converte o valor da memoria em uma string binária unsigned
+				aux = Integer.toString(mem, 2);
+				//pega o equivalente a o primeiro byte do endereço
+				aux = aux.substring(24);
+				
+				//coloca no registrador rt o valor do byte aux unsigned
+				registers.put(rt, util.binToDec(aux));
+			}
+			
+			//-------------------------------------------------------------------------------------------------------------//
 			break;
 
 		case "001111": // lui rt, offset
 			ins = util.imapIJ.get(001111) + " $" + util.binToDec(util.getRt(bin)) + ", "
 					+ util.binToDec(util.getOperand(bin));
+			//-------------------------------------------------------------------------------------------------------------//
+			rt = "$" + util.binToDec(util.getRt(bin));
+			//pegar o offset em binario
+			aux = util.getOperand(bin) + "0000000000000000";
+			//-------------------------------------------------------------------------------------------------------------//
 			break;
 
 		case "100011": // lw rt, offset(rs)
 			ins = util.imapIJ.get(100011) + " $" + util.binToDec(util.getRt(bin));
 			ins += ", " + util.binToDec(util.getOperand(bin)) + "($" + util.binToDec(util.getRs(bin)) + ")";
+			//-------------------------------------------------------------------------------------------------------------//
+			//Pega um valor da memoria no endereço (offset+rs) e salva no registrador de destino(rt)
+			rs = "$" + util.binToDec(util.getRs(bin));
+			rt = "$" + util.binToDec(util.getRt(bin));
+			offset = util.binToDec(util.getOperand(bin));
+			
+			//pegando o endereço de memória
+			address = offset + util.objToInt(registers, rs);
+			//pegando o dado que está no endereço de memória
+			mem = (Integer) memory.get(Integer.toString(address));
+			
+			if(mem == null) {
+				//registers.put(rt, 0);
+				memory.put(Integer.toString(address), 0);
+			}else {
+				registers.put(rt, mem);
+			}
+			//-------------------------------------------------------------------------------------------------------------//
 			break;
 
 		case "001101": // ori rt, rs, offset
@@ -617,11 +679,39 @@ public class HexDecoder {
 		case "101000": // sb rt, offset(rs)
 			ins = util.imapIJ.get(101000) + " $" + util.binToDec(util.getRt(bin));
 			ins += ", " + util.binToDec(util.getOperand(bin)) + "($" + util.binToDec(util.getRs(bin)) + ")";
+			//-------------------------------------------------------------------------------------------------------------//
+			rs = "$" + util.binToDec(util.getRs(bin));
+			rt = "$" + util.binToDec(util.getRt(bin));
+			offset = util.binToDec(util.getOperand(bin));
+			
+			//pegando o endereço de memória
+			address = offset + util.objToInt(registers, rs);
+			
+			//pega um byte do dado de 32bits do registrador e retorna o byte com sign-ext 32bits
+			mem = util.binToDec(util.getByteSignExt(util.objToInt(registers, rt)));
+			
+			//salva esse dado na memoria
+			memory.put(Integer.toString(address), mem);
+			
+			//-------------------------------------------------------------------------------------------------------------//
 			break;
 
 		case "101011": // sw rt, offset(rs)
 			ins = util.imapIJ.get(101011) + " $" + util.binToDec(util.getRt(bin));
 			ins += ", " + util.binToDec(util.getOperand(bin)) + "($" + util.binToDec(util.getRs(bin)) + ")";
+			//-------------------------------------------------------------------------------------------------------------//
+			//pega o valor que está na origem(rt) e salva no endereço de memoria de destino que está em rs+offset
+			rs = "$" + util.binToDec(util.getRs(bin));
+			rt = "$" + util.binToDec(util.getRt(bin));
+			offset = util.binToDec(util.getOperand(bin));
+			
+			//pega o endereço de memoria onde o dado vai ser salvo
+			address = offset + util.objToInt(registers, rs);
+			
+			//mem = (Integer) memory.get(Integer.toString(address));
+			//salva o dado que está em rt e salva no endereço de memoria
+			memory.put(Integer.toString(address), util.objToInt(registers, rt));
+			//-------------------------------------------------------------------------------------------------------------//
 			break;
 
 		case "001110": // xori $rt, $rs, operand\offset

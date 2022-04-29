@@ -22,9 +22,21 @@ public class Simulador {
 		Map<String,Object> memMap = new LinkedHashMap<String,Object>();
 		Map<String, Object> dataMap = new LinkedHashMap<String, Object>();
 		
+		//TreeMap<String, Object> memory = new TreeMap<>();
+		//System.out.println(util.decToBin(68));
+		//System.out.print(util.decToBin(0));
+		//System.out.println(Integer.toString(15, 2));
+		//System.out.println("1100".startsWith("1"));
+		//System.out.println(Integer.parseInt("1001", 2));
+		
+		//System.out.println(Integer.toBinaryString(15 << 2));
+		
+		
 		try {
 			//pegando o nome dos arquivos da pasta input
 			File[] listaArq = test.getListFiles();
+			
+			
 			
 			//iterando por cada arquivo da lista e executando-o no simulador
 			for (int i = 0; i < listaArq.length; i++) {
@@ -38,7 +50,13 @@ public class Simulador {
 				//Inicializando os bancos de registradores e memoria, "data"
 				hexDecoder.initializeReg(regsMap);
 				hexDecoder.initializeMem(memMap);	
-				hexDecoder.initializeData(dataMap);
+				//valor de data map é uma string talvez precise converter
+				//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+				//
+				hexDecoder.initializeMem(dataMap);
+				
+		
+				
 
 
 				hex = test.getHexList(input);

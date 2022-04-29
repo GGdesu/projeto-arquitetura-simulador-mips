@@ -146,7 +146,7 @@ public class FuncUtil {
 				return numero;
 			}
 			
-			//funçao que converte de decimal para binario
+			//funçao que converte de decimal para binario 32-bits
 			public String decToBin(int dec) {
 				String bin = Integer.toBinaryString(dec);
 				
@@ -157,6 +157,26 @@ public class FuncUtil {
 				}
 				
 				return bin;
+			}
+			
+			//pega o byte mais a direita de uma string de 32bits e retorna esse byte com  sinal extendido 32bits
+			public String getByteSignExt(Integer value) {
+				String aux = this.decToBin(value);
+				String bin = aux.substring(24);
+				
+				if(bin.startsWith("1")) {
+					for(int i = bin.length(); i < 32; i++) {
+						bin = "1" + bin;
+					}
+				}else if(bin.startsWith("0")) {
+					for(int i = bin.length(); i < 32; i++) {
+						bin = "0" + bin;
+					}
+				}
+				
+				
+				return bin;
+				
 			}
 			
 			//Funçao que faz o complemento a 2 de numeros negativos
