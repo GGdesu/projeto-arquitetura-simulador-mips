@@ -53,7 +53,7 @@ public class Simulador {
 				//valor de data map é uma string talvez precise converter
 				//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 				//
-				hexDecoder.initializeMem(dataMap);
+				hexDecoder.initializeData(dataMap);
 				
 		
 				

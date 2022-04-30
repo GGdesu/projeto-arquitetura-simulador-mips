@@ -131,7 +131,7 @@ public class FuncUtil {
 				return i;
 			}
 			
-			//função que converte binario para decimal
+			//função que converte binario para decimal em complemento a 2
 			public int binToDec(String bin) {
 				boolean ehNegativo = false;
 				if(bin.substring(0, 1).equalsIgnoreCase("1") && bin.length() >= 16) {

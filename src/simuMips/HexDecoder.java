@@ -27,7 +27,9 @@ public class HexDecoder {
 	
 	public void initializeData(Map<String, Object> dataInit) {
 		if(!(dataInit == null)) {
-			data.putAll(dataInit);
+			dataInit.forEach((chave, valor) -> {
+				memory.put(chave, util.objToInt(dataInit, chave));
+			});
 		}else {
 			System.out.println("Arquivo de entrada não tem informação de Data");
 		}
@@ -460,6 +462,13 @@ public class HexDecoder {
 				break;
 			case "001000": //jr rs 
 				ins = util.imapR.get(001000) + " $" + util.binToDec(util.getRs(bin));
+				//-------------------------------------------------------------------------------------------------------------//
+				rs = "$" + util.binToDec(util.getRs(bin));
+				
+				//Pula incondicionalmente para a instrução cujo endereço está no registrador
+				registers.put("pc", util.objToInt(registers, rs));
+				
+				//-------------------------------------------------------------------------------------------------------------//				
 				break;
 			case "001100":
 				ins = util.imapR.get(001100);
@@ -556,18 +565,52 @@ public class HexDecoder {
 			//-------------------------------------------------------------------------------------------------------------//
 			break;
 
-		case "000100": // beq rs, rt, start
+		case "000100": // beq rs, rt, start //Corrigido: tirar o start do nome e colocar o offset
 			ins = util.imapIJ.get(000100) + " $" + util.binToDec(util.getRs(bin));
-			ins += ", $" + util.binToDec(util.getRt(bin)) + ", start";
+			ins += ", $" + util.binToDec(util.getRt(bin)) + ", " + util.binToDec(util.getOperand(bin));
+			//-------------------------------------------------------------------------------------------------------------//
+			rs = "$" + util.binToDec(util.getRs(bin));
+			rt = "$" + util.binToDec(util.getRt(bin));
+			offset = util.binToDec(util.getOperand(bin));
+			
+			//Branch para a instrução no label offset se rs == rt
+			if(util.objToInt(registers, rs) == util.objToInt(registers, rt)) {
+				registers.put("pc", offset);
+			}
+			
+			//-------------------------------------------------------------------------------------------------------------//
 			break;
 
-		case "000001": // bltz rs, start
-			ins = util.imapIJ.get(000001) + " $" + util.binToDec(util.getRs(bin)) + ", start";
+		case "000001": // bltz rs, start //Corrigido: tirar o start do nome e colocar o offset
+			ins = util.imapIJ.get(000001) + " $" + util.binToDec(util.getRs(bin)) + ", " + util.binToDec(util.getOperand(bin));
+			
+			//-------------------------------------------------------------------------------------------------------------//
+			rs = "$" + util.binToDec(util.getRs(bin));
+			offset = util.binToDec(util.getOperand(bin));
+			
+			//Branch para a instrução no label offset se rs < 0
+			if(util.objToInt(registers, rs) < 0) {
+				registers.put("pc", offset);
+			}
+			
+			//-------------------------------------------------------------------------------------------------------------//
 			break;
 
-		case "000101": // bne rs, rt, start // CONSERTAR START PELA INSTRUÃ‡ÃƒO
+		case "000101": // bne rs, rt, start //Corrigido: tirar o start do nome e colocar o offset
 			ins = util.imapIJ.get(000101) + " $" + util.binToDec(util.getRs(bin));
-			ins += ", $" + util.binToDec(util.getRt(bin)) + ", start";
+			ins += ", $" + util.binToDec(util.getRt(bin)) + ", " + util.binToDec(util.getOperand(bin));
+			//-------------------------------------------------------------------------------------------------------------//
+			rs = "$" + util.binToDec(util.getRs(bin));
+			rt = "$" + util.binToDec(util.getRt(bin));
+			offset = util.binToDec(util.getOperand(bin));
+			
+			//Branch para a instrução no label offset se rs != rt
+			if(util.objToInt(registers, rs) != util.objToInt(registers, rt)) {
+				registers.put("pc", offset);
+			}
+			
+			//-------------------------------------------------------------------------------------------------------------//
+			
 			break;
 
 		case "100000": // lb rt, offset(rs)
@@ -739,12 +782,28 @@ public class HexDecoder {
 			break;
 
 		// identificando instruÃ§Ãµes do tipo J
-		case "000010": // j start
-			ins = util.imapIJ.get(000010) + " start";
+		case "000010": // j start //Corrigido: tirar o start do nome e colocar o endereço do campo JTA
+			ins = util.imapIJ.get(000010) + " " + util.binToDec(util.getJTA(bin));
+			//-------------------------------------------------------------------------------------------------------------//
+			//a variavel offset será usada para guardar o endereço
+			offset = util.binToDec(util.getJTA(bin));
+			
+			//Salta incondicionalmente para a instrução no label.
+			registers.put("pc", offset);
+			//-------------------------------------------------------------------------------------------------------------//
 			break;
 
-		case "000011": // jal start
-			ins = util.imapIJ.get(000010) + " start";
+		case "000011": // jal start //Corrigido: tirar o start do nome e colocar o endereço do campo JTA
+			ins = util.imapIJ.get(000010) + " " + util.binToDec(util.getJTA(bin));
+			//-------------------------------------------------------------------------------------------------------------//
+			//a variavel offset será usada para guardar o endereço
+			offset = util.binToDec(util.getJTA(bin));
+			//salva o endereço de retorno para a proxima instrução do pc no registrador $ra($31)
+			registers.put("$31", util.objToInt(registers, "pc"));
+			// salta para  a instruçao no label
+			registers.put("pc", offset);
+			
+			//-------------------------------------------------------------------------------------------------------------//
 			break;
 		}
 		
