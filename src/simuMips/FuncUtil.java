@@ -62,18 +62,17 @@ public class FuncUtil {
 			);
 			
 			
-			//retorna os registradores diferentes de zero, pare serem escritos no arquivo de saida.
-			public Map<String, Object> getOutputregs(Map<String, Object> registers){
-				Map<String, Object> outMapReg = new LinkedHashMap<>();
-				registers.forEach((chave, valor) ->{
-					//int value = (Integer) valor;
+			//retorna um banco de memoria ou registradores diferentes de zero, pare serem escritos no arquivo de saida.
+			public Map<String, Object> getOutputBankOf(Map<String, Object> bankOfData){
+				Map<String, Object> outBankMap = new LinkedHashMap<>();
+				bankOfData.forEach((chave, valor) ->{
 					if(!valor.equals(Integer.valueOf(0))) {
-						outMapReg.put(chave, valor);
+						outBankMap.put(chave, valor);
 					}
 				});
 				
 				
-				return outMapReg;
+				return outBankMap;
 			}
 			
 			// funcao que converte o hexadecimal para binario

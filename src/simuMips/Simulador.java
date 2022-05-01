@@ -22,15 +22,6 @@ public class Simulador {
 		Map<String,Object> memMap = new LinkedHashMap<String,Object>();
 		Map<String, Object> dataMap = new LinkedHashMap<String, Object>();
 		
-		//TreeMap<String, Object> memory = new TreeMap<>();
-		//System.out.println(util.decToBin(68));
-		//System.out.print(util.decToBin(0));
-		//System.out.println(Integer.toString(15, 2));
-		//System.out.println("1100".startsWith("1"));
-		//System.out.println(Integer.parseInt("1001", 2));
-		
-		//System.out.println(Integer.toBinaryString(15 << 2));
-		
 		
 		try {
 			//pegando o nome dos arquivos da pasta input
@@ -47,12 +38,9 @@ public class Simulador {
 				regsMap = test.getPreRegs(input);
 				memMap = test.getPreMem(input);
 				dataMap = test.getPreData(input);
-				//Inicializando os bancos de registradores e memoria, "data"
+				//Inicializando os bancos de registradores, memoria e "data"
 				hexDecoder.initializeReg(regsMap);
 				hexDecoder.initializeMem(memMap);	
-				//valor de data map é uma string talvez precise converter
-				//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-				//
 				hexDecoder.initializeData(dataMap);
 				
 		
@@ -66,8 +54,8 @@ public class Simulador {
 					Map<String, Object> output = new LinkedHashMap<String, Object>();
 					output.put("hex", s);
 					output.put("text", instrucao);
-					output.put("regs", util.getOutputregs(hexDecoder.registers));
-					output.put("mem", hexDecoder.memory);
+					output.put("regs", util.getOutputBankOf(hexDecoder.registers));
+					output.put("mem", util.getOutputBankOf(hexDecoder.memory));
 					output.put("stdout", hexDecoder.getStdout());
 					saida.add(output);
 

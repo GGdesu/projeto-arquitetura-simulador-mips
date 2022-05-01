@@ -370,9 +370,9 @@ public class HexDecoder {
 					}
 				//-------------------------------------------------------------------------------------------------------------//
 				break;
-			case "000000": //sll rd, rt, shamt //CONSERTAR SHAMT
+			case "000000": //sll rd, rt, shamt //Corrigido
 				ins = util.imapR.get(000000) + " $" + util.binToDec(util.getRd(bin));
-				ins += ", $" + util.binToDec(util.getRt(bin)) + ", " + util.binToDec(util.getOperand(bin));	
+				ins += ", $" + util.binToDec(util.getRt(bin)) + ", " + util.binToDec(util.getSh(bin));	
 				//-------------------------------------------------------------------------------------------------------------//
 				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" +  util.binToDec(util.getRd(bin));
@@ -385,9 +385,9 @@ public class HexDecoder {
 				registers.put(rd, result);
 				//-------------------------------------------------------------------------------------------------------------//
 				break;
-			case "000010": //srl rd, rt, shamt //CONSERTAR SHAMT
+			case "000010": //srl rd, rt, shamt //corrigido
 				ins = util.imapR.get(000010) + " $" + util.binToDec(util.getRd(bin));
-				ins += ", $" + util.binToDec(util.getRt(bin)) + ", " + util.binToDec(util.getOperand(bin));
+				ins += ", $" + util.binToDec(util.getRt(bin)) + ", " + util.binToDec(util.getSh(bin));
 				//-------------------------------------------------------------------------------------------------------------//
 				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" +  util.binToDec(util.getRd(bin));
@@ -400,9 +400,9 @@ public class HexDecoder {
 				registers.put(rd, result);
 				//-------------------------------------------------------------------------------------------------------------//
 				break;
-			case "000011": //sra rd, rt, shamt //CONSERTAR SHAMT
+			case "000011": //sra rd, rt, shamt //Corrigido
 				ins = util.imapR.get(000011) + " $" + util.binToDec(util.getRd(bin));
-				ins += ", $" + util.binToDec(util.getRt(bin)) + ", " + util.binToDec(util.getOperand(bin));
+				ins += ", $" + util.binToDec(util.getRt(bin)) + ", " + util.binToDec(util.getSh(bin));
 				//-------------------------------------------------------------------------------------------------------------//
 				//pegando os valores da instruï¿½ï¿½o
 				rd = "$" +  util.binToDec(util.getRd(bin));
@@ -575,7 +575,12 @@ public class HexDecoder {
 			
 			//Branch para a instrução no label offset se rs == rt
 			if(util.objToInt(registers, rs) == util.objToInt(registers, rt)) {
-				registers.put("pc", offset);
+				//PC = PC + (offset * 4)
+				registers.put("pc", util.objToInt(registers, "pc") + (offset * 4));
+				//no final da decodificação das instruções o PC sempre adiciona PC+4
+				//Mas caso aconteça o desvio, não irá precisar fazer essa adição extra
+				// então com antecedencia eu vou subtrair 4 do PC para no final ele adicionar +4
+				registers.put("pc", util.objToInt(registers, "pc")-4);
 			}
 			
 			//-------------------------------------------------------------------------------------------------------------//
@@ -590,7 +595,12 @@ public class HexDecoder {
 			
 			//Branch para a instrução no label offset se rs < 0
 			if(util.objToInt(registers, rs) < 0) {
-				registers.put("pc", offset);
+				//PC = PC + (offset * 4)
+				registers.put("pc", util.objToInt(registers, "pc") + (offset * 4));
+				//no final da decodificação das instruções o PC sempre adiciona PC+4
+				//Mas caso aconteça o desvio, não irá precisar fazer essa adição extra
+				// então com antecedencia eu vou subtrair 4 do PC para no final ele adicionar +4
+				registers.put("pc", util.objToInt(registers, "pc")-4);
 			}
 			
 			//-------------------------------------------------------------------------------------------------------------//
@@ -606,7 +616,12 @@ public class HexDecoder {
 			
 			//Branch para a instrução no label offset se rs != rt
 			if(util.objToInt(registers, rs) != util.objToInt(registers, rt)) {
-				registers.put("pc", offset);
+				//PC = PC + (offset * 4)
+				registers.put("pc", util.objToInt(registers, "pc") + (offset * 4));
+				//no final da decodificação das instruções o PC sempre adiciona PC+4
+				//Mas caso aconteça o desvio, não irá precisar fazer essa adição extra
+				// então com antecedencia eu vou subtrair 4 do PC para no final ele adicionar +4
+				registers.put("pc", util.objToInt(registers, "pc")-4);
 			}
 			
 			//-------------------------------------------------------------------------------------------------------------//
@@ -789,7 +804,7 @@ public class HexDecoder {
 			offset = util.binToDec(util.getJTA(bin));
 			
 			//Salta incondicionalmente para a instrução no label.
-			registers.put("pc", offset);
+			registers.put("pc", offset*4);
 			//-------------------------------------------------------------------------------------------------------------//
 			break;
 
@@ -801,7 +816,7 @@ public class HexDecoder {
 			//salva o endereço de retorno para a proxima instrução do pc no registrador $ra($31)
 			registers.put("$31", util.objToInt(registers, "pc"));
 			// salta para  a instruçao no label
-			registers.put("pc", offset);
+			registers.put("pc", offset*4);
 			
 			//-------------------------------------------------------------------------------------------------------------//
 			break;
